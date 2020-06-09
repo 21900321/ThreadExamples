@@ -28,12 +28,17 @@ public class SumMultipleThreads implements Runnable{
 
 		ArrayList<Thread> threadsForSubSum = new ArrayList<Thread>();
 
-		for(SumMultipleThreads runner:sumRunners) {
-			Thread thread = new Thread(runner);
-			thread.start();
-			threadsForSubSum.add(thread);
+		try {
+			for(SumMultipleThreads runner:sumRunners) {
+				Thread thread = new Thread(runner);
+				threadsForSubSum.add(thread);
+				thread.join();
+				thread.run();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
+		
 		long grandTotal = 0;
 		for(SumMultipleThreads runner:sumRunners) {
 			grandTotal += runner.totalSum;
